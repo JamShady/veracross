@@ -17,7 +17,7 @@
     <div id="app">
         <nav>
             <div>
-                <a href="{{ url('/') }}">
+                <a href="{{ route('home') }}">
                     {{ config('app.name', 'Digistorm test') }}
                 </a>
             </div>

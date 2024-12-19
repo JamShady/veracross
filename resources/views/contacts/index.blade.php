@@ -22,11 +22,11 @@
                         </h6>
                         <p class="card-text">
                             @if(isset($contact->email))
-                                {{ $contact->email }}<br>
+                                {{ $contact->email }}<br />
                             @endif
 
                             @foreach($contact->phoneNumbers as $phoneNumber)
-                                {{ $phoneNumber->number }}
+                                {{ $phoneNumber->number }}<br />
                             @endforeach
                         </p>
                     </div>
@@ -38,7 +38,7 @@
                             <form method="POST" action="{{ route('contacts.destroy', ['contact' => $contact]) }}">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-danger">Delete</a>
+                                <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </span>
                     </div>

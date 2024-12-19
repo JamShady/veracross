@@ -39,9 +39,11 @@
                 </div>
             </div>
             <div class="row">
-                <label class="form-label">Last Name
-                    <input type="text" name="last_name" value="{{ $contact->last_name }}"/>
-                </label>
+                <div class="col-auto">
+                    <label class="form-label">Last Name
+                        <input type="text" name="last_name" value="{{ $contact->last_name }}"/>
+                    </label>
+                </div>
             </div>
             <div class="row">
                 <div class="col-auto">
@@ -73,9 +75,11 @@
             </div>
             @foreach($contact->phoneNumbers as $phoneNumber)
                 <div class="row">
-                    <label class="form-label">Phone Number
-                        <input type="text" name="number[]" value="{{ $phoneNumber->number }}"/>
-                    </label>
+                    <div class="col-auto">
+                        <label class="form-label">Phone Number
+                            <input type="text" name="number[]" value="{{ $phoneNumber->number }}"/>
+                        </label>
+                    </div>
                 </div>
             @endforeach
             {{-- Blank field outside the loop to allow new number. Refactor later to add multiple at a time. --}}

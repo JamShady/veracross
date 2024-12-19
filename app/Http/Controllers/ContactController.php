@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 class ContactController extends Controller
 {
@@ -28,7 +29,7 @@ class ContactController extends Controller
     /**
      * @throws \Throwable
      */
-    public function store(Request $request): Response
+    public function store(Request $request): Response|RedirectResponse
     {
         $contact = new Contact();
         $contact->fill($request->all());
@@ -37,7 +38,7 @@ class ContactController extends Controller
             PhoneNumber::create(['number' => $number, 'contact_id' => $contact->id]);
         }
 
-        return view('contacts.show', compact('contact'));
+        return redirect()->route('contacts.show', compact('contact'));
     }
 
     public function show(Contact $contact): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -50,7 +51,7 @@ class ContactController extends Controller
         return view('contacts.edit', compact('contact'));
     }
 
-    public function update(Request $request, Contact $contact): Response
+    public function update(Request $request, Contact $contact): Response|RedirectResponse
     {
         $contact->fill($request->all());
 
@@ -73,7 +74,7 @@ class ContactController extends Controller
         return redirect()->route('contacts.show', compact('contact'));
     }
 
-    public function destroy(Contact $contact): Response
+    public function destroy(Contact $contact): Response|RedirectResponse
     {
         $contact->delete();
 
