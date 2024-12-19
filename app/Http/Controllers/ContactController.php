@@ -10,6 +10,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Contact as FormRequest;
 
 class ContactController extends Controller
 {
@@ -29,10 +30,10 @@ class ContactController extends Controller
     /**
      * @throws \Throwable
      */
-    public function store(Request $request): Response|RedirectResponse
+    public function store(FormRequest $request): Response|RedirectResponse
     {
         $contact = new Contact();
-        $contact->fill($request->all());
+        $contact->fill($request->safe()->except(['number']));
         $contact->save();
         foreach ($request->number as $number) {
             PhoneNumber::create(['number' => $number, 'contact_id' => $contact->id]);
@@ -51,9 +52,9 @@ class ContactController extends Controller
         return view('contacts.edit', compact('contact'));
     }
 
-    public function update(Request $request, Contact $contact): Response|RedirectResponse
+    public function update(FormRequest $request, Contact $contact): Response|RedirectResponse
     {
-        $contact->fill($request->all());
+        $contact->fill($request->safe()->except(['number']));
 
         foreach ($contact->phoneNumbers as $phoneNumber) {
             if (! in_array($phoneNumber->number, $request->number)) {

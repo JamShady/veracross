@@ -36,50 +36,56 @@
             <div class="row">
                 <div class="col-auto">
                     <label class="form-label">First Name
-                        <input type="text" name="first_name" value="{{ $contact->first_name }}"/>
+                        <input type="text" name="first_name" value="{{ old('first_name', $contact->first_name) }}" required/>
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-auto">
                     <label class="form-label">Last Name
-                        <input type="text" name="last_name" value="{{ $contact->last_name }}"/>
+                        <input type="text" name="last_name" value="{{ old('last_name', $contact->last_name) }}" required/>
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-auto">
                     <label class="form-label">Date of Birth
-                        <input type="text" name="DOB" value="{{ $contact->DOB }}"/>
+                        <input type="date" name="DOB" value="{{ old('DOB', $contact->DOB) }}"/>
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-auto">
                     <label class="form-label">Company
-                        <input type="text" name="company_name" value="{{ $contact->company_name }}"/>
+                        <input type="text" name="company_name" value="{{ old('company_name', $contact->company_name) }}" required/>
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-auto">
                     <label class="form-label">Position
-                        <input type="text" name="position" value="{{ $contact->position }}"/>
+                        <input type="text" name="position" value="{{ old('position', $contact->position) }}" required/>
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-auto">
                     <label class="form-label">Email
-                        <input type="text" name="email" value="{{ $contact->email }}"/>
+                        <input type="email" name="email" value="{{ old('email', $contact->email) }}"/>
                     </label>
                 </div>
             </div>
-            @foreach($contact->phoneNumbers as $phoneNumber)
+            @foreach(array_filter(old('number', $contact->phoneNumbers->pluck('number')->toArray())) as $index => $phoneNumber)
                 <div class="row">
                     <div class="col-auto">
-                        <label class="form-label">Phone Number
-                            <input type="text" name="number[]" value="{{ $phoneNumber->number }}"/>
+                        <label class="form-label">Phone Number #{{ $index + 1 }}
+                            <input
+                                type="tel"
+                                name="number[]"
+                                pattern="^\+?\d+$"
+                                title="Please enter only numbers with an optional + at the start"
+                                value="{{ $phoneNumber }}"
+                            />
                         </label>
                     </div>
                 </div>
@@ -88,7 +94,12 @@
             <div class="row">
                 <div class="col-auto">
                     <label class="form-label">Phone Number
-                        <input type="text" name="number[]"/>
+                        <input
+                            type="tel"
+                            name="number[]"
+                            pattern="^\+?\d+$"
+                            title="Please enter only numbers with an optional + at the start"
+                        />
                     </label>
                 </div>
             </div>
