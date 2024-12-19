@@ -22,3 +22,5 @@
 - Implement specific phone number formatting
 - Deeper email validation (i.e. prevent fake email submissions)
 - Add a 'Back/Cancel' button to the forms to return the user to the previous page
+
+- The auto-adding of phone number fields should have fallbacks for non-JS environments, and perhaps even a direct button to add fields in case the javascript as written fails to work properly on some clients
