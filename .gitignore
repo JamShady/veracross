@@ -5,6 +5,7 @@
 
 .env
 vendor/
+!resources/views/vendor/
 
 # Node artifact files
 node_modules/
