@@ -14,12 +14,29 @@ use App\Http\Requests\Contact as FormRequest;
 
 class ContactController extends Controller
 {
-    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function index(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $validated = $request->validate([
+            'search' => [
+                'string',
+                'alpha_num',
+                'min:3',
+                'max:100',
+            ],
+        ]);
 
-        $contacts =  Contact::paginate(5);
+        $search = $validated['search'] ?? null;
 
-        return view('contacts.index', compact('contacts'));
+        $contacts = Contact::query()
+                           ->when($search, function ($query, $search) {
+                               $query->whereRaw('LOWER(first_name) LIKE ?', ['%' . strtolower($search) . '%'])
+                                     ->orWhereRaw('LOWER(last_name) LIKE ?', ['%' . strtolower($search) . '%'])
+                                     ->orWhereRaw('LOWER(company_name) LIKE ?', ['%' . strtolower($search) . '%']);
+                           })
+                           ->paginate(5)
+                           ->withQueryString(); // This preserves the search parameter in pagination
+
+        return view('contacts.index', compact('contacts', 'search'));
     }
 
     public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
