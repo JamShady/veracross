@@ -14,9 +14,9 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="m-4">
         <nav>
-            <div>
+            <div class="text-4xl font-bold">
                 <a href="{{ route('home') }}">
                     {{ config('app.name', 'Digistorm test') }}
                 </a>
