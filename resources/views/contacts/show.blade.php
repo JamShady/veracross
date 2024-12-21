@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row gap-3">
             <h1 class="mr-3">{{ $contact->full_name }}</h1>
             <a href="{{ route('contacts.edit', ['contact' => $contact]) }}" class="btn btn-info">Edit</a>
             <form method="POST" action="{{ route('contacts.destroy', ['contact' => $contact]) }}">
