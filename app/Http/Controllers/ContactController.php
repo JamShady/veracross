@@ -33,6 +33,7 @@ class ContactController extends Controller
                                      ->orWhereRaw('LOWER(last_name) LIKE ?', ['%' . strtolower($search) . '%'])
                                      ->orWhereRaw('LOWER(company_name) LIKE ?', ['%' . strtolower($search) . '%']);
                            })
+                           ->orderBy('updated_at', 'DESC')
                            ->paginate(5)
                            ->withQueryString(); // This preserves the search parameter in pagination
 
